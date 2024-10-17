@@ -8,11 +8,13 @@ editor_options:
 toc: true
 ---
 
+\listoftables
+
 ## Set up the coding environment
 
-```{r setup}
+```{r setup, eval=T, echo=F, warning=F, message=F, error=F}
 #Load packages
-library(tidyverse);library(here);library(lubridate)
+library(tidyverse);library(here);library(lubridate);library(knitr)
 
 #Load data
 nutrient_data_raw <- read.csv(
@@ -23,6 +25,8 @@ nutrient_data_raw <- read.csv(
 nutrient_data_raw$sampledate = ymd(nutrient_data_raw$sampledate)
 
 ```
+
+The raw dataset has `r nrow(nutrient_data_raw)` rows and `r ncol(nutrient_data_raw)` columns.
 
 ## Wrangle the data
 
@@ -42,6 +46,25 @@ nutrient_data_tn <- nutrient_data %>%
     max_tn_ug = max(tn_ug),
     sd_tn_ug = sd(tn_ug)
   )
+
 ```
 
+\newpage
+
 ## Report the summary
+
+```{r view table, echo=FALSE}
+
+knitr::kable(
+  nutrient_data_tn,
+  caption = 'Summary of Total Nitrogen ($\\mu$g)',
+  col.names = c('Lake name','Mean','Min','Max','Std Dev.')
+)
+
+knitr::kable(
+  nutrient_data_tn,
+  caption = 'Another Summary of Total Nitrogen ($\\mu$g)',
+  col.names = c('Lake name','Mean','Min','Max','Std Dev.')
+)
+```
+
